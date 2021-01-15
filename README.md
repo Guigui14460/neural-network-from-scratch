@@ -1,2 +1,3 @@
-# neural-network-from-scratch
-Code from the nnfs.io book written by Sentdex.
+# Neural Network From Scratch
+
+The entire of the code has been taken from the [https://nnfs.io/](NNFS) book written by Sentdex.
