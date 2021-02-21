@@ -4,10 +4,10 @@ from .loss_function import LossFunction
 
 
 class MeanSquaredError(LossFunction):
-    def forward(self, output: np.array, y: np.array) -> None:
-        return np.mean((y - output) ** 2, axis=-1)
+    def forward(self, output: np.ndarray, y: np.ndarray) -> np.ndarray:
+        return np.mean(np.square(y - output), axis=-1)
 
-    def backward(self, dvalues: np.array, y: np.array) -> None:
+    def backward(self, dvalues: np.ndarray, y: np.ndarray) -> None:
         samples = len(dvalues)
         outputs = len(dvalues[0])
 

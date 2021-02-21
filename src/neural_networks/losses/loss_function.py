@@ -27,19 +27,19 @@ class LossFunction(abc.ABC):
         self.accumulated_sum = 0
         self.accumulated_count = 0
 
-    def calculate(self, output: np.array, y: np.array, *, include_regularization: bool = False) -> tuple:
+    def calculate(self, output: np.ndarray, y: np.ndarray, *, include_regularization: bool = False) -> tuple:
         """Make the results for all neurons of the layer.
 
         Parameters:
         -----------
-            output: np.array
+            output
                 tensor of output data
-            y: np.array
+            y
                 represents the good values (labels)
 
         Returns:
         --------
-            result: np.array
+            result
                 mean of the loss function of the model
         """
         sample_losses = self.forward(output, y)
@@ -55,39 +55,39 @@ class LossFunction(abc.ABC):
     def calculate_accumulated(self, *, include_regularization: bool = False) -> tuple:
         data_loss = self.accumulated_sum / self.accumulated_count
         if not include_regularization:
-            return data_loss
+            return (data_loss,)
         return data_loss, self.regularization_loss()
 
     def remember_trainable_layers(self, trainable_layers: list) -> None:
         self.trainable_layers = trainable_layers
 
     @abc.abstractmethod
-    def forward(self, output: np.array, y: np.array) -> None:
+    def forward(self, output: np.ndarray, y: np.ndarray) -> np.ndarray:
         """Make the results for all neurons of the layer.
 
         Parameters:
         -----------
-            output: np.array
+            output
                 tensor of output data
-            y: np.array
+            y
                 represents the good values (labels)
 
         Returns:
         --------
-            result: np.array
+            result
                 tensor representing the loss for each output neurons of the layer
         """
         pass
 
     @abc.abstractmethod
-    def backward(self, dvalues: np.array, y: np.array) -> None:
+    def backward(self, dvalues: np.ndarray, y: np.ndarray) -> None:
         """Make the gradient with given derivative value.
 
         Parameters:
         -----------
-            dvalues: np.array
+            dvalues
                 tensor of values used to derivate the output
-            y: np.array
+            y
                 represents the good values (labels)
         """
         pass

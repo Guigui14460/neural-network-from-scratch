@@ -8,7 +8,7 @@ class Accuracy(abc.ABC):
         self.accumulated_sum = 0
         self.accumulated_count = 0
 
-    def calculate(self, predictions: np.array, y: np.array) -> float:
+    def calculate(self, predictions: np.ndarray, y: np.ndarray) -> float:
         comparisons = self.compare(predictions, y)
         accuracy = np.mean(comparisons)
 
@@ -16,13 +16,13 @@ class Accuracy(abc.ABC):
         self.accumulated_count += len(comparisons)
         return accuracy
 
-    def calculate_accumulated(self) -> None:
+    def calculate_accumulated(self) -> float:
         return self.accumulated_sum / self.accumulated_count
 
     @abc.abstractmethod
-    def init(self, y: np.array, reinit: bool = False):
+    def init(self, y: np.ndarray, reinit: bool = False):
         pass
 
     @abc.abstractmethod
-    def compare(self, predictions: np.array, y: np.array) -> np.array:
+    def compare(self, predictions: np.ndarray, y: np.ndarray) -> np.ndarray:
         pass

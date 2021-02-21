@@ -15,7 +15,7 @@ class Model:
         self.layers = []
         self.softmax_classifier_output = None
 
-    def add(self, layer: Layer) -> None:
+    def add(self, layer) -> None:
         self.layers.append(layer)
 
     def set(self, *, loss: LossFunction, optimizer: Optimizer, accuracy: Accuracy) -> None:
@@ -52,7 +52,7 @@ class Model:
         if isinstance(self.layers[-1], Softmax) and isinstance(self.loss, LossCategoricalCrossentropy):
             self.softmax_classifier_output = SoftmaxCategoricalCrossentropy()
 
-    def train(self, X: np.array, y: np.array, *, epochs: int = 1, print_every: int = 1,
+    def train(self, X: np.ndarray, y: np.ndarray, *, epochs: int = 1, print_every: int = 1,
               validation_data: tuple = None, batch_size: int = None) -> None:
         self.accuracy.init(y)
         train_steps = 1
@@ -102,13 +102,13 @@ class Model:
         if validation_data is not None:
             self.evaluate(*validation_data, batch_size=batch_size)
 
-    def forward(self, X: np.array, training: bool) -> np.array:
+    def forward(self, X: np.ndarray, training: bool) -> np.ndarray:
         self.input_layer.forward(X, training)
         for layer in self.layers:
             layer.forward(layer.prev.output, training)
         return layer.output
 
-    def backward(self, output: np.array, y: np.array) -> None:
+    def backward(self, output: np.ndarray, y: np.ndarray) -> None:
         if self.softmax_classifier_output is not None:
             self.softmax_classifier_output.backward(output, y)
             self.layers[-1].dinputs = self.softmax_classifier_output.dinputs
@@ -119,7 +119,7 @@ class Model:
         for layer in reversed(self.layers):
             layer.backward(layer.next.dinputs)
 
-    def evaluate(self, X_val: np.array, y_val: np.array, *, batch_size: int = None) -> None:
+    def evaluate(self, X_val: np.ndarray, y_val: np.ndarray, *, batch_size: int = None) -> None:
         validation_steps = 1
         if batch_size is not None:
             validation_steps = len(X_val) // batch_size
@@ -146,7 +146,7 @@ class Model:
         print(
             f"Validation: \tAcc: {validation_accuracy:.3f}, Loss: {validation_loss:.3f}")
 
-    def predict(self, X: np.array, *, batch_size: int = None) -> None:
+    def predict(self, X: np.ndarray, *, batch_size: int = None) -> np.ndarray:
         prediction_steps = 1
         if batch_size is not None:
             prediction_steps = len(X) // batch_size

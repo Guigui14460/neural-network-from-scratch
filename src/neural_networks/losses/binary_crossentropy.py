@@ -6,19 +6,19 @@ from .loss_function import LossFunction
 class LossBinaryCrossentropy(LossFunction):
     """Class which describe the base of a loss function."""
 
-    def forward(self, output: np.array, y: np.array) -> None:
+    def forward(self, output: np.ndarray, y: np.ndarray) -> np.ndarray:
         """Make the results for all neurons of the layer.
 
         Parameters:
         -----------
-            output: np.array
+            output
                 tensor of output data
-            y: np.array
+            y
                 represents the good values (labels)
 
         Returns:
         --------
-            result: np.array
+            result
                 tensor representing the loss for each output neurons of the layer
         """
         output_clipped = np.clip(output, 1e-7, 1 - 1e-7)
@@ -27,14 +27,14 @@ class LossBinaryCrossentropy(LossFunction):
         sample_losses = np.mean(sample_losses, axis=-1)
         return sample_losses
 
-    def backward(self, dvalues: np.array, y: np.array) -> None:
+    def backward(self, dvalues: np.ndarray, y: np.ndarray) -> None:
         """Make the gradient with given derivative value.
 
         Parameters:
         -----------
-            dvalues: np.array
+            dvalues
                 tensor of values used to derivate the output
-            y: np.array
+            y
                 represents the good values (labels)
         """
         samples = len(dvalues)

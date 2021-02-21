@@ -4,8 +4,8 @@ from .layer import Layer
 
 
 class Input(Layer):
-    def forward(self, inputs: np.array, training: bool) -> None:
+    def forward(self, inputs: np.ndarray, training: bool) -> None:
         self.output = inputs
 
-    def backward(self, dvalues: np.array) -> None:
+    def backward(self, dvalues: np.ndarray) -> None:
         pass

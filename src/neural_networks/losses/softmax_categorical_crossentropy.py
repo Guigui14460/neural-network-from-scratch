@@ -5,7 +5,7 @@ from neural_networks.losses.categorical_cross_entropy import LossCategoricalCros
 
 
 class SoftmaxCategoricalCrossentropy:
-    def backward(self, dvalues: np.array, y_true: np.array) -> None:
+    def backward(self, dvalues: np.ndarray, y_true: np.ndarray) -> None:
         samples = len(dvalues)
         if len(y_true.shape) == 2:
             y_true = np.argmax(y_true, axis=1)

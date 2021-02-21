@@ -8,28 +8,28 @@ class Softmax(ActivationFunction):
 
     Attributes:
     -----------
-        output: np.array
+        output
             tensor representing the result of the layer of neurons
     """
 
-    def forward(self, inputs: np.array, training: bool) -> None:
+    def forward(self, inputs: np.ndarray, training: bool) -> None:
         """Make the results for all neurons of the layer.
 
         Parameters:
         -----------
-            inputs: np.array
+            inputs
                 tensor of data or coming from a previous layer
         """
         self.inputs = inputs
         exp_values = np.exp(inputs - np.max(inputs, axis=1, keepdims=True))
         self.output = exp_values / np.sum(exp_values, axis=1, keepdims=True)
 
-    def backward(self, dvalues: np.array) -> None:
+    def backward(self, dvalues: np.ndarray) -> None:
         """Make the gradient with given derivative value.
 
         Parameters:
         -----------
-            dvalues: np.array
+            dvalues
                 tensor of values used to derivate the inputs
         """
         self.dinputs = np.empty_like(dvalues)
@@ -39,5 +39,5 @@ class Softmax(ActivationFunction):
                 single_output) - np.dot(single_output, single_output.T)
             self.dinputs[index] = np.dot(jacobian_matrix, single_dvalues)
 
-    def predictions(self, outputs: np.array) -> None:
+    def predictions(self, outputs: np.ndarray) -> np.ndarray:
         return np.argmax(outputs, axis=1)

@@ -8,11 +8,11 @@ class Dense(Layer):
 
     Attributes:
     -----------
-        weights: np.array
+        weights
             tensor describe the weight of each value of input data
-        biases: np.array
+        biases
             tensor describe some irrigularities for each value of input data
-        output: np.array
+        output
             tensor representing the result of the layer of neurons
     """
 
@@ -26,23 +26,23 @@ class Dense(Layer):
         self.bias_regularizer_l1 = bias_regularizer_l1
         self.bias_regularizer_l2 = bias_regularizer_l2
 
-    def forward(self, inputs: np.array, training: bool) -> None:
+    def forward(self, inputs: np.ndarray, training: bool) -> None:
         """Make the results for all neurons of the layer.
 
         Parameters:
         -----------
-            inputs: np.array
+            inputs
                 tensor of data or coming from a previous layer
         """
         self.inputs = inputs
         self.output = np.dot(inputs, self.weights) + self.biases
 
-    def backward(self, dvalues: np.array) -> None:
+    def backward(self, dvalues: np.ndarray) -> None:
         """Make the gradient with given derivative value.
 
         Parameters:
         -----------
-            dvalues: np.array
+            dvalues
                 tensor of values used to derivate the weights, biases and inputs
         """
         # partial derivation of weights and biases
@@ -70,6 +70,6 @@ class Dense(Layer):
     def get_parameters(self) -> tuple:
         return self.weights, self.biases
 
-    def set_parameters(self, weights: np.array, biases: np.array) -> None:
+    def set_parameters(self, weights: np.ndarray, biases: np.ndarray) -> None:
         self.weights = weights
         self.biases = biases
