@@ -22,7 +22,8 @@ class Softmax(ActivationFunction):
         """
         self.inputs = inputs
         exp_values = np.exp(inputs - np.max(inputs, axis=1, keepdims=True))
-        self.output = exp_values / np.sum(exp_values, axis=1, keepdims=True)
+        self.output = np.true_divide(
+            exp_values, np.sum(exp_values, axis=1, keepdims=True))
 
     def backward(self, dvalues: np.ndarray) -> None:
         """Make the gradient with given derivative value.
